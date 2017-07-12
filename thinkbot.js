@@ -1364,13 +1364,45 @@ bot.on('message', message => {
   if (command === "thinkboard"){
     if(isBlacklisted(message.author.id)) return message.reply(config.blacklist_message)
 
-		let thinkpointsone = sql.get(`SELECT * FROM scores WHERE userId ='${config.topthinker}'`).then(row => {})
-		let thinkpointstwo = sql.get(`SELECT * FROM scores WHERE userId = '${config.topthinkertwo}'`).then(row1 => {})
-		let thinkpointsthree = sql.get(`SELECT * FROM scores WHERE userId = '${config.topthinkerthree}'`).then(row2 => {})
+		//let thinkpointsone = sql.get(`SELECT * FROM scores WHERE userId ='${config.topthinker}'`).then(row => {})
+		//let thinkpointstwo = sql.get(`SELECT * FROM scores WHERE userId = '${config.topthinkertwo}'`).then(row1 => {})
+		//let thinkpointsthree = sql.get(`SELECT * FROM scores WHERE userId = '${config.topthinkerthree}'`).then(row2 => {})
+/**
+    	sql.all('SELECT * FROM scores ORDER BY points DESC LIMIT 3').then((rows) => {
+		var numberz = 1;
+        	let string = '';
+        	for (let row of rows) {
+		if(numberz = 1){
+			string += (`:first_place: Top 1 <@${row.userId}> with ${row.points} Think Points\n`);
+			numberz++;
+			
+		} 
+		if(numberz = 2){
+			string += (`:second_place: Top 2 <@${row.userId}> with ${row.points} Think Points\n`);
+			numberz++;
+			
+		} 
+		if(numberz = 3){
+			string += (`:third_place: Top 3 <@${row.userId}> with ${row.points} Think Points\n`);
+			numberz++;
+			
+		}
+        	}
+       	 	message.channel.sendEmbed(new discord.RichEmbed().setTitle(":trophy: Top People who had the most Think Points :trophy:").addDescription(string))
+		//(string));
+    		});
+	  **/
+    	sql.all('SELECT * FROM scores ORDER BY points DESC LIMIT 3').then((rows) => {
+        	let string = ':trophy: Top People who had the most Think Points :trophy:';
+        	for (let row of rows) {
+			string += (`<@${row.userId}> with ${row.points} Think Points\n`);
 
-
-			message.channel.sendEmbed(new discord.RichEmbed().setTitle(":trophy: Top People who had the most Think Points :trophy:").addField(":first_place: Top 1", "<@" + config.topthinker + "> with " + thinkpointsone.row + " Think Points").addField(":second_place: Top 2", "<@" + config.topthinkertwo + "> with " + thinkpointstwo.row1 + " Think Points")
-			.addField(":third_place: Top 3", "<@" + config.topthinkerthree + "> with " + thinkpointsthree.row2 + " Think Points"))
+        	}
+       	 	message.channel.sendEmbed(new discord.RichEmbed().addDescription(string))
+		//(string));
+    		});
+			//message.channel.sendEmbed(new discord.RichEmbed().setTitle(":trophy: Top People who had the most Think Points :trophy:").addField(":first_place: Top 1", "<@" + config.topthinker + "> with " + thinkpointsone.row + " Think Points").addField(":second_place: Top 2", "<@" + config.topthinkertwo + "> with " + thinkpointstwo.row1 + " Think Points")
+			//.addField(":third_place: Top 3", "<@" + config.topthinkerthree + "> with " + thinkpointsthree.row2 + " Think Points"))
 
 
 
@@ -1394,7 +1426,7 @@ bot.on('message', message => {
 		if(isBlacklisted(message.author.id)) return message.reply(config.blacklist_message)
 		message.channel.sendEmbed(new discord.RichEmbed().setTitle(":ping_pong: Pong! " + bot.ping + " ms.").setColor(0x00FF00))
 	}
-
+/**
 	if (command === "suggestemoji"){
 		let emojiname = args[0]
 		let urllink = args.splice(1).join(' ');
@@ -1413,7 +1445,7 @@ bot.on('message', message => {
 		message.react("👎")
 
 }
-
+**/
 
 
 }
